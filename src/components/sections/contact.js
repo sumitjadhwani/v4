@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { srConfig, email } from '@config';
+import { srConfig, email, phone } from '@config';
 import sr from '@utils/sr';
-import { usePrefersReducedMotion } from '@hooks';
 
 const StyledContactSection = styled.section`
   max-width: 600px;
@@ -39,19 +38,16 @@ const StyledContactSection = styled.section`
     ${({ theme }) => theme.mixins.bigButton};
     margin-top: 50px;
   }
+
+  .phone-link {
+    ${({ theme }) => theme.mixins.bigButton};
+    margin-top: 20px;
+  }
 `;
 
 const Contact = () => {
   const revealContainer = useRef(null);
-  const prefersReducedMotion = usePrefersReducedMotion();
-
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      return;
-    }
-
-    sr.reveal(revealContainer.current, srConfig());
-  }, []);
+  useEffect(() => sr.reveal(revealContainer.current, srConfig()), []);
 
   return (
     <StyledContactSection id="contact" ref={revealContainer}>
@@ -60,12 +56,20 @@ const Contact = () => {
       <h2 className="title">Get In Touch</h2>
 
       <p>
-        Although I’m not currently looking for any new opportunities, my inbox is always open.
-        Whether you have a question or just want to say hi, I’ll try my best to get back to you!
+        My inbox is always open. Whether you have a question or just want to say hello, I'll try my
+        best to get back to you!
       </p>
-
-      <a className="email-link" href={`mailto:${email}`}>
-        Say Hello
+      <p>Feel free to contact me about any relevant job updates.</p>
+      <a
+        className="email-link"
+        href={`mailto:${email}`}
+        target="_blank"
+        rel="nofollow noopener noreferrer">
+        Mail Me
+      </a>
+      <p></p>
+      <a className="phone-link" href={`tel:${phone}`}>
+        Call Me
       </a>
     </StyledContactSection>
   );
